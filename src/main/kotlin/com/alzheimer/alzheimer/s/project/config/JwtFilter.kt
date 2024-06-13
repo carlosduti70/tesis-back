@@ -1,5 +1,6 @@
 package com.alzheimer.alzheimer.s.project.config
 
+import com.alzheimer.alzheimer.s.project.service.UserSecurityService
 import org.springframework.stereotype.Component
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -20,6 +21,9 @@ class JwtFilter: OncePerRequestFilter() {
 
     @Autowired
     private val userDetailsService: UserDetailsService? = null
+    
+    @Autowired
+    private val userSecurityService: UserSecurityService? = null
 
     override fun doFilterInternal(
         request: HttpServletRequest,

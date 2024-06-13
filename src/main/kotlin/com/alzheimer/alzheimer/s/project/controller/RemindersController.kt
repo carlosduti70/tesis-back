@@ -4,6 +4,7 @@ package com.alzheimer.alzheimer.s.project.controller
 import com.alzheimer.alzheimer.s.project.model.Card
 import com.alzheimer.alzheimer.s.project.model.Caregivers
 import com.alzheimer.alzheimer.s.project.model.Reminders
+import com.alzheimer.alzheimer.s.project.repository.CardRepository
 import com.alzheimer.alzheimer.s.project.service.RemindersService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
@@ -30,60 +31,13 @@ class RemindersController {
         return remindersService.list()
     }
 
-//    @GetMapping("/cardreminders")
-//    fun getReminders(
-//        @RequestParam dateTime: String,
-//        @RequestParam hour: String
-//    ): ResponseEntity<Reminders> {
-//        try {
-//            val card = Card(dateTime = dateTime, hour = hour)
-//            val reminder = remindersService.listCard(card)
-//
-//            return if (reminder != null) {
-//                // Enviar el recordatorio durante 30 segundos
-//                val timer = Timer()
-//                timer.schedule(object : TimerTask() {
-//                    override fun run() {
-//                        // Aquí puedes detener el envío del recordatorio o hacer cualquier otra acción necesaria
-//                        println("Deteniendo el envío del recordatorio después de 30 segundos")
-//                        timer.cancel() // Detiene el temporizador después de 30 segundos
-//                    }
-//                }, TimeUnit.SECONDS.toMillis(30))
-//
-//                ResponseEntity.ok(reminder)
-//            } else {
-//                ResponseEntity.notFound().build()
-//            }
-//        } catch (e: IllegalArgumentException) {
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
-//        }
-//    }
 
+    @PostMapping("/card-reminders")
+    fun getReminders(@RequestBody card: Card): ResponseEntity<*> {
+        val reminder = remindersService.listCard(card)
 
-//    @PostMapping("/cardreminders")
-//    fun getReminders(
-//        @RequestBody card: Card
-//    ): ResponseEntity<Reminders> {
-//        val reminder = remindersService.listCard(card)
-//
-//        return if (reminder != null){
-//            ResponseEntity.ok(reminder)
-//        } else{
-//            ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-//        }
-//    }
-
-
-//    @GetMapping("/cardreminders")
-//    fun getReminders(@RequestBody card: Card): ResponseEntity<Reminders> {
-//        val reminder = remindersService.listCard(card)
-//
-//        return if (reminder != null) {
-//            ResponseEntity.ok(reminder)
-//        } else {
-//            ResponseEntity.status(HttpStatus.NOT_FOUND).build()
-//        }
-//    }
+        return ResponseEntity.ok(reminder)
+    }
 
 
 

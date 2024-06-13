@@ -24,40 +24,18 @@ class RemindersService {
         return remindersRepository.findAll()
     }
 
-//    fun listCard(card: Card): Reminders? {
-//        val dateTime = card.dateTime
-//        val hour = card.hour
-//
-//        // Validar que la fecha y hora sean válidas
-//        if (dateTime!!.isBefore(LocalDate.now()) || hour!!.isBefore(LocalTime.now())) {
-//            throw IllegalArgumentException("La fecha y la hora deben ser futuras.")
-//        }
-//
-//        // Obtener todos los recordatorios
-//        val remindersList = remindersRepository.findAll()
-//
-//        // Obtener el recordatorio que coincide con la fecha y la hora de la tarjeta
-//        val reminder = remindersList.firstOrNull {
-//            it.date == dateTime &&
-//                    it.startTime!! <= hour &&
-//                    hour >= it.endTime
-//        }
-//
-//        return reminder
-//    }
 
-    fun listCard(card: Card): Reminders? {
-        val reminder = remindersRepository.findAll()
 
-        return reminder.firstOrNull{
-            it.date == card.dateTime && it.startTime!! <= card.hour && it.endTime!! >= card.hour
+    fun listCard(card: Card): List<Reminders> {
+        val reminders = remindersRepository.findAll()
+
+        val response = reminders.filter {
+            it.date == card.dateTime && it.startTime!! <= card.hour!!.withSecond(0).withNano(0)
+                    && it.endTime!! >= card.hour!!.withSecond(0).withNano(0)
         }
+
+        return response
     }
-
-
-
-
-
 
 
 

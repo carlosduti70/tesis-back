@@ -22,7 +22,7 @@ class Alarm {
     var title: String? = null
 
     var time: LocalTime? = null
-    var repeat: Boolean? = null
+    var repeat: Boolean? = true
     var date: LocalDate? = null
     @Column(name = "caregivers_id")
     var caregiversId: Long? = null
