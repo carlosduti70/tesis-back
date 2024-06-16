@@ -7,6 +7,8 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import java.sql.Timestamp
+import java.time.LocalDate
+import java.time.LocalTime
 
 @Entity
 @Table(name = "interactions")
@@ -16,15 +18,13 @@ class Interactions {
     @Column(name = "id")
     var id: Long? = null
 
-    var message: String? = null
+    var title: String? = null
 
-    var response: String? = null
+    @Column(name = "date_time")
+    var dateTime: LocalDate? = null
 
-    @Column(name = "date_time_interaction")
-    var dateTimeInteractions: Timestamp? = null
+    var hour: LocalTime?= null
 
-    var request: Boolean? = null
-
-    @Column(name = "patient_id")
-    var patientId: Long? = null
+    @Column(name = "card_id")
+    var cardId: Long? = null
 }

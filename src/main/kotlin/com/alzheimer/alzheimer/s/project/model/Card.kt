@@ -15,7 +15,7 @@ class Card {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    var id: Long? = null
+    val id: Long? = 0
 
     @Column(name = "date_time")
     var dateTime: LocalDate? = null
@@ -24,5 +24,7 @@ class Card {
     @Column(name = "cardname_id")
     var cardNameId: Long? = null
     @Column(name = "patient_id")
-    var patientId: Long? = null
+    var patientId: Long? = 0
+    @Column(name = "card_uid")
+    var cardUid: String = ""
 }

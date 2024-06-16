@@ -1,5 +1,6 @@
 package com.alzheimer.alzheimer.s.project.service
 
+import com.alzheimer.alzheimer.s.project.model.Card
 import com.alzheimer.alzheimer.s.project.model.CardName
 import com.alzheimer.alzheimer.s.project.repository.CardNameRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,14 +21,14 @@ class CardNameService {
         return cardNameRepository.findAll()
     }
 
-    fun save(cardName: CardName): CardName{
-        try{
+    fun save(cardName: CardName): CardName {
+        try {
             return cardNameRepository.save(cardName)
-        }
-        catch (ex:Exception){
-            throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
+        } catch (ex: Exception) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
     }
+
 
     fun update(cardName: CardName): CardName{
         try {
@@ -46,7 +47,7 @@ class CardNameService {
             val response = cardNameRepository.findById(cardName.id)
                 ?: throw Exception("ID no existe")
             response.apply {
-                cardUID=cardName.cardUID
+                cardUid=cardName.cardUid
             }
             return cardNameRepository.save(response)
         }

@@ -32,10 +32,10 @@ class InteractionsController {
         return ResponseEntity(interactionsService.update(interactions), HttpStatus.OK)
     }
 
-    @PatchMapping
-    fun updateName (@RequestBody interactions: Interactions):ResponseEntity<Interactions>{
-        return ResponseEntity(interactionsService.updateName(interactions), HttpStatus.OK)
-    }
+//    @PatchMapping
+//    fun updateName (@RequestBody interactions: Interactions):ResponseEntity<Interactions>{
+//        return ResponseEntity(interactionsService.updateName(interactions), HttpStatus.OK)
+//    }
 
     @GetMapping("/{id}")
     fun listById (@PathVariable("id") id: Long): ResponseEntity<*>{

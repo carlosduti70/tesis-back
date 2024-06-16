@@ -2,7 +2,7 @@ package com.alzheimer.alzheimer.s.project.controller
 
 
 import com.alzheimer.alzheimer.s.project.model.Card
-import com.alzheimer.alzheimer.s.project.model.Caregivers
+//import com.alzheimer.alzheimer.s.project.model.Caregivers
 import com.alzheimer.alzheimer.s.project.model.Reminders
 import com.alzheimer.alzheimer.s.project.repository.CardRepository
 import com.alzheimer.alzheimer.s.project.service.RemindersService

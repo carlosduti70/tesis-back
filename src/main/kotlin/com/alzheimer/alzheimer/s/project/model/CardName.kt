@@ -10,7 +10,9 @@ class CardName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
-    var id: Long? = null
+    val id: Long? = 0
     @Column(name = "card_uid")
-    var cardUID: String? = null
+    var cardUid: String = ""
+    @Column(name = "card_id")
+    var cardId: Long? = null
 }

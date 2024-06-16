@@ -29,8 +29,8 @@ class Reminders {
     var status: String? = null
     var repeat: Boolean? = null
 
-    @Column(name = "caregivers_id")
-    var caregiversId: Long? = null
+    @Column(name = "user_id")
+    var userId: Long? = null
     @Column(name = "patient_id")
     var patientId: Long? = null
     @Column(name = "card_id")

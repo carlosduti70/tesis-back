@@ -44,19 +44,19 @@ class InteractionsService {
         }
     }
 
-    fun updateName(interactions:Interactions): Interactions{
-        try{
-            val response = interactionsRepository.findById(interactions.id)
-                ?: throw Exception("ID no existe")
-            response.apply {
-                message=interactions.message
-            }
-            return interactionsRepository.save(response)
-        }
-        catch (ex:Exception){
-            throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
-        }
-    }
+//    fun updateName(interactions:Interactions): Interactions{
+//        try{
+//            val response = interactionsRepository.findById(interactions.id)
+//                ?: throw Exception("ID no existe")
+//            response.apply {
+//                message=interactions.message
+//            }
+//            return interactionsRepository.save(response)
+//        }
+//        catch (ex:Exception){
+//            throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
+//        }
+//    }
 
     fun listById (id:Long?):Interactions?{
         return interactionsRepository.findById(id)

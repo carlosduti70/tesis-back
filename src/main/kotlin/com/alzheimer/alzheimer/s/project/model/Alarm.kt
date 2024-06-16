@@ -24,6 +24,6 @@ class Alarm {
     var time: LocalTime? = null
     var repeat: Boolean? = true
     var date: LocalDate? = null
-    @Column(name = "caregivers_id")
-    var caregiversId: Long? = null
+    @Column(name = "patient_id")
+    var patientId: Long? = null
 }

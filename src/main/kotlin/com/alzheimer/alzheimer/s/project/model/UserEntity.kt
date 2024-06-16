@@ -26,11 +26,13 @@ class UserEntity {
     @Column(nullable = false)
     var locked: Boolean? = null
     var disabled: Boolean? = null
+
+    var name : String? = null
+    @Column(name = "last_name")
+    var lastName: Long? = null
+
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     var roles: List<RoleEntity>? = null
-
-    @Column(name = "caregivers_id")
-    var caregiversId: Long? = null
 
     @Column(name = "patient_id")
     var patientId: Long? = null

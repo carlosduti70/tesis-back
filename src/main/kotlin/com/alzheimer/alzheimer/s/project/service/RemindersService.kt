@@ -1,8 +1,9 @@
 package com.alzheimer.alzheimer.s.project.service
 
 import com.alzheimer.alzheimer.s.project.model.Card
+import com.alzheimer.alzheimer.s.project.model.Interactions
 import com.alzheimer.alzheimer.s.project.model.Reminders
-import com.alzheimer.alzheimer.s.project.repository.CardRepository
+import com.alzheimer.alzheimer.s.project.repository.InteractionsRepository
 import com.alzheimer.alzheimer.s.project.repository.RemindersRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -11,14 +12,12 @@ import org.springframework.web.server.ResponseStatusException
 
 @Service
 class RemindersService {
-    @Autowired
-    private lateinit var reminders: RemindersRepository
 
     @Autowired
     lateinit var remindersRepository: RemindersRepository
 
     @Autowired
-    lateinit var cardRepository: CardRepository
+    lateinit var interactionsRepository: InteractionsRepository
 
     fun list (): List<Reminders> {
         return remindersRepository.findAll()
@@ -30,11 +29,22 @@ class RemindersService {
         val reminders = remindersRepository.findAll()
 
         val response = reminders.filter {
-            it.date == card.dateTime && it.startTime!! <= card.hour!!.withSecond(0).withNano(0)
+            it.date == card.dateTime
+                    && it.startTime!! <= card.hour!!.withSecond(0).withNano(0)
                     && it.endTime!! >= card.hour!!.withSecond(0).withNano(0)
         }
 
-        return response
+        response.forEach { reminder ->
+            val interaction = Interactions().apply {
+                title = reminder.title        // Título del recordatorio
+                dateTime = card.dateTime  // Fecha de la card
+                hour = card.hour!!.withSecond(0).withNano(0)    // Hora de la card
+                cardId = card.id
+            }
+            interactionsRepository.save(interaction)
+        }
+
+            return response
     }
 
 

@@ -1,6 +1,8 @@
 package com.alzheimer.alzheimer.s.project.service
 
 import com.alzheimer.alzheimer.s.project.model.Card
+import com.alzheimer.alzheimer.s.project.model.CardName
+import com.alzheimer.alzheimer.s.project.repository.CardNameRepository
 import com.alzheimer.alzheimer.s.project.repository.CardRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -14,22 +16,36 @@ class CardService {
     @Autowired
     lateinit var cardRepository: CardRepository
 
+    @Autowired
+    lateinit var cardNameRepository: CardNameRepository
+
     fun list (): List<Card> {
         return cardRepository.findAll()
     }
 
-    fun save(card: Card): Card{
-        try{
+    fun save(card: Card): Card {
+        try {
             card.dateTime = LocalDate.now()
             card.hour = LocalTime.now().withSecond(0).withNano(0)
-            card.cardNameId= 1
+
+            // Verifica si ya existe una entrada para el cardUID
+            val existingCardName = cardNameRepository.findByCardUid(card.cardUid)
+
+//            if (existingCardName != null) {
+//                card.cardNameId = existingCardName.id
+//            } else {
+//                // Crea una nueva entrada en CardName si no existe
+//                val cardName = CardName(cardUid = card.cardUid)
+//                val savedCardName = cardNameRepository.save(cardName)
+//                card.cardNameId = savedCardName.id
+//            }
 
             return cardRepository.save(card)
-        }
-        catch (ex:Exception){
-            throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
+        } catch (ex: Exception) {
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
     }
+
 
     fun update(card: Card): Card{
         try {

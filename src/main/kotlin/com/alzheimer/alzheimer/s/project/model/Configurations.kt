@@ -21,6 +21,6 @@ class Configurations {
     @Column(name = "alert_tones")
     var alertTones: String? = null
 
-    @Column(name = "caregivers_id")
-    var caregiversId: Long? = null
+    @Column(name = "user_id")
+    var userId: Long? = null
 }
