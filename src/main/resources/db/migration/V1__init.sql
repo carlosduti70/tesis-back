@@ -1,3 +1,16 @@
+CREATE TABLE IF NOT EXISTS card (
+    id SERIAL PRIMARY KEY,
+    date_time TIMESTAMP,
+    hour TIME,
+    card_uid VARCHAR(15) UNIQUE
+    );
+
+CREATE TABLE IF NOT EXISTS cardname (
+    id SERIAL PRIMARY KEY,
+    card_uid VARCHAR(15) UNIQUE,
+    FOREIGN KEY (card_uid) REFERENCES card(card_uid)
+    );
+
 CREATE TABLE IF NOT EXISTS patient (
     id SERIAL PRIMARY KEY,
     name VARCHAR(55),
@@ -5,17 +18,9 @@ CREATE TABLE IF NOT EXISTS patient (
     age TIMESTAMP,
     date_diagnosis DATE,
     address VARCHAR(55),
-    stage VARCHAR(55)
-    );
-
-CREATE TABLE IF NOT EXISTS alarm (
-    id SERIAL PRIMARY KEY,
-    title VARCHAR(75),
-    time TIME,
-    repeat BOOLEAN,
-    date DATE,
-    patient_id INT,
-    FOREIGN KEY (patient_id) REFERENCES patient(id)
+    stage VARCHAR(55),
+    cardname_id INT UNIQUE
+    FOREIGN KEY (cardname_id) REFERENCES cardname(id)
     );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -28,28 +33,19 @@ CREATE TABLE IF NOT EXISTS users (
     name VARCHAR(50),
     last_name VARCHAR(50),
     role VARCHAR(20) NOT NULL, -- Puede ser 'admin', 'caregiver', etc.
-    relationship VARCHAR(55),
-    patient_id INT,
+    patient_id INT UNIQUE,
     FOREIGN KEY (patient_id) REFERENCES patient(id)
     );
 
-CREATE TABLE IF NOT EXISTS card (
+CREATE TABLE IF NOT EXISTS alarm (
     id SERIAL PRIMARY KEY,
-    date_time TIMESTAMP,
-    hour TIME,
+    title VARCHAR(75),
+    time TIME,
+    repeat BOOLEAN,
+    date DATE,
     patient_id INT,
-    card_uid VARCHAR(15) UNIQUE,
     FOREIGN KEY (patient_id) REFERENCES patient(id)
     );
-
-CREATE TABLE IF NOT EXISTS cardname (
-    id SERIAL PRIMARY KEY,
-    card_uid VARCHAR(15) UNIQUE,
-    card_id INT,
-    FOREIGN KEY (card_id) REFERENCES card(id)
-    );
-
-
 
 CREATE TABLE IF NOT EXISTS reminders (
     id SERIAL PRIMARY KEY,
@@ -60,7 +56,6 @@ CREATE TABLE IF NOT EXISTS reminders (
     end_time TIME,
     status VARCHAR(75),
     repeat BOOLEAN,
-    patiente VARCHAR(75),
     user_id INT,
     patient_id INT,
     card_id INT,

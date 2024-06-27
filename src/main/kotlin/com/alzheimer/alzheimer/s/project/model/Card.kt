@@ -20,11 +20,6 @@ class Card {
     @Column(name = "date_time")
     var dateTime: LocalDate? = null
     var hour: LocalTime?= null
-
-    @Column(name = "cardname_id")
-    var cardNameId: Long? = null
-    @Column(name = "patient_id")
-    var patientId: Long? = 0
     @Column(name = "card_uid")
     var cardUid: String = ""
 }

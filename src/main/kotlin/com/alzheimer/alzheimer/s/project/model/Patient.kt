@@ -31,6 +31,4 @@ class Patient {
 
     var stage: String? = null
 
-    @Column(name = "alarm_id")
-    var alarmId: Long? = null
 }

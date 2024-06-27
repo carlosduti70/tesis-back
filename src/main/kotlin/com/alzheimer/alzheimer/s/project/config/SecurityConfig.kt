@@ -28,10 +28,9 @@ class SecurityConfig {
             .authorizeHttpRequests { authRequest ->
                 authRequest
                     .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/Caregivers/**")
-                    .hasAnyRole("admin")
+                    .requestMatchers("/Caregivers/**").hasAnyRole("admin")
                     .requestMatchers(HttpMethod.GET,"/Configurations/**")
-                    .hasAnyRole("carer")
+                    .hasAnyRole("admin")
 
                     .anyRequest().permitAll()
             }

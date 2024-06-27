@@ -2,6 +2,7 @@ package com.alzheimer.alzheimer.s.project.service
 
 import com.alzheimer.alzheimer.s.project.model.Alarm
 import com.alzheimer.alzheimer.s.project.repository.AlarmRepository
+import com.alzheimer.alzheimer.s.project.repository.PatientRepository
 //import com.alzheimer.alzheimer.s.project.repository.CaragiversRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -16,8 +17,9 @@ class AlarmService {
     @Autowired
     lateinit var alarmRepository: AlarmRepository
 
-//    @Autowired
-//    lateinit var caragiversRepository: CaragiversRepository
+    @Autowired
+    lateinit var patientRepository: PatientRepository
+
 
     fun list (): List<Alarm> {
         return alarmRepository.findAll()
@@ -38,8 +40,11 @@ class AlarmService {
 
     fun save(alarm: Alarm): Alarm {
         try {
+            patientRepository.findById(alarm.patientId)
+                ?: throw Exception("Id del paciente no encontrado")
             return alarmRepository.save(alarm)
-        } catch (ex: Exception) {
+        }
+        catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.message)
         }
     }
@@ -66,11 +71,12 @@ class AlarmService {
 
     fun delete(id: Long?): Boolean {
         try {
-            val response = alarmRepository.findById(id!!)
+            val response = alarmRepository.findById(id)
                 ?: throw ResponseStatusException(HttpStatus.NOT_FOUND, "ID no existe")
-            alarmRepository.deleteById(id)
+            alarmRepository.deleteById(id!!)
             return true
-        } catch (ex: Exception) {
+        }
+        catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.message)
         }
     }

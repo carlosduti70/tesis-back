@@ -27,19 +27,6 @@ class CardService {
         try {
             card.dateTime = LocalDate.now()
             card.hour = LocalTime.now().withSecond(0).withNano(0)
-
-            // Verifica si ya existe una entrada para el cardUID
-            val existingCardName = cardNameRepository.findByCardUid(card.cardUid)
-
-//            if (existingCardName != null) {
-//                card.cardNameId = existingCardName.id
-//            } else {
-//                // Crea una nueva entrada en CardName si no existe
-//                val cardName = CardName(cardUid = card.cardUid)
-//                val savedCardName = cardNameRepository.save(cardName)
-//                card.cardNameId = savedCardName.id
-//            }
-
             return cardRepository.save(card)
         } catch (ex: Exception) {
             throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)

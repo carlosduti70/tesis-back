@@ -1,12 +1,7 @@
 package com.alzheimer.alzheimer.s.project.model
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.FetchType
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
-import jakarta.persistence.Table
+import jakarta.persistence.*
+import org.springframework.security.core.userdetails.UserDetails
+
 @Entity
 @Table(name = "users")
 class UserEntity {
@@ -29,7 +24,7 @@ class UserEntity {
 
     var name : String? = null
     @Column(name = "last_name")
-    var lastName: Long? = null
+    var lastName: String? = null
 
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     var roles: List<RoleEntity>? = null
@@ -37,5 +32,6 @@ class UserEntity {
     @Column(name = "patient_id")
     var patientId: Long? = null
 
-
+    @Enumerated(EnumType.STRING)
+    var role: Role? = null
 }
