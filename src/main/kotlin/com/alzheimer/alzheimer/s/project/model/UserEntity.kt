@@ -1,5 +1,7 @@
 package com.alzheimer.alzheimer.s.project.model
 import jakarta.persistence.*
+import org.springframework.security.core.GrantedAuthority
+import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
 
 @Entity
@@ -10,13 +12,11 @@ class UserEntity {
     @Column(updatable = false)
     var id: Long? = null
 
-    var username: String? = null
 
-    @Column(nullable = false, length = 200)
     var password: String? = null
 
     @Column(length = 50)
-    var email: String? = null
+    var username: String? = null
 
     @Column(nullable = false)
     var locked: Boolean? = null
@@ -32,6 +32,4 @@ class UserEntity {
     @Column(name = "patient_id")
     var patientId: Long? = null
 
-    @Enumerated(EnumType.STRING)
-    var role: Role? = null
 }

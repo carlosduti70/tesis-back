@@ -1,6 +1,5 @@
 package com.alzheimer.alzheimer.s.project.dto
 
-import com.alzheimer.alzheimer.s.project.model.Role
 import com.alzheimer.alzheimer.s.project.model.RoleEntity
 
 class RegisterRequest {

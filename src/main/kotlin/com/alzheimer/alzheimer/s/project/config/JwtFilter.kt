@@ -21,9 +21,6 @@ class JwtFilter: OncePerRequestFilter() {
 
     @Autowired
     private val userDetailsService: UserDetailsService? = null
-    
-    @Autowired
-    private val userSecurityService: UserSecurityService? = null
 
     override fun doFilterInternal(
         request: HttpServletRequest,

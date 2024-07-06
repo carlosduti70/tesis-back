@@ -2,6 +2,7 @@ package com.alzheimer.alzheimer.s.project.controller
 
 import com.alzheimer.alzheimer.s.project.config.JwtUtil
 import com.alzheimer.alzheimer.s.project.dto.LoginDTO
+import com.alzheimer.alzheimer.s.project.dto.RegisterRequest
 import com.alzheimer.alzheimer.s.project.dto.TokenDTO
 import com.alzheimer.alzheimer.s.project.model.Patient
 import com.alzheimer.alzheimer.s.project.model.UserEntity
@@ -24,6 +25,9 @@ class AuthController {
     private val authenticationManager: AuthenticationManager? = null
     @Autowired
     private val jwtUtil: JwtUtil? = null
+
+    @Autowired
+    lateinit var service: UserSecurityService
     @Autowired
     lateinit var userSecurityService: UserSecurityService
 
@@ -35,6 +39,13 @@ class AuthController {
         return ResponseEntity(response, HttpStatus.OK)
     }
 
+//    @PostMapping("/register")
+//    fun register(
+//        @RequestBody request: RegisterRequest
+//    ): ResponseEntity<TokenDTO?>? {
+//        return ResponseEntity.ok(service.register(request))
+//    }
+
     @PostMapping("/logout")
     fun logout() {
         // Invalidar la sesión actual y eliminar el token JWT
@@ -42,8 +53,4 @@ class AuthController {
         // Puedes agregar otras lógicas de limpieza de sesión si es necesario
     }
 
-    @PostMapping("/createuser")
-    fun save (@RequestBody userEntity: UserEntity):ResponseEntity<UserEntity>{
-        return ResponseEntity(userSecurityService.save(userEntity), HttpStatus.OK)
-    }
 }

@@ -13,6 +13,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+
 @Configuration
 class SecurityConfig {
     @Autowired
@@ -28,9 +29,9 @@ class SecurityConfig {
             .authorizeHttpRequests { authRequest ->
                 authRequest
                     .requestMatchers("/auth/**").permitAll()
-                    .requestMatchers("/Caregivers/**").hasAnyRole("admin")
-                    .requestMatchers(HttpMethod.GET,"/Configurations/**")
-                    .hasAnyRole("admin")
+                    .requestMatchers("/patient/**").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/alarm/**").hasAnyRole("ADMIN")
+                    .anyRequest().hasAnyRole("ADMIN")
 
                     .anyRequest().permitAll()
             }

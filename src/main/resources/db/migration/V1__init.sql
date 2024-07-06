@@ -19,20 +19,18 @@ CREATE TABLE IF NOT EXISTS patient (
     date_diagnosis DATE,
     address VARCHAR(55),
     stage VARCHAR(55),
-    cardname_id INT UNIQUE
+    cardname_id INT UNIQUE,
     FOREIGN KEY (cardname_id) REFERENCES cardname(id)
     );
 
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(80) NOT NULL,
-    email VARCHAR(60) NOT NULL UNIQUE,
-    locked BOOLEAN NOT NULL,
-    disabled BOOLEAN NOT NULL,
     name VARCHAR(50),
     last_name VARCHAR(50),
-    role VARCHAR(20) NOT NULL, -- Puede ser 'admin', 'caregiver', etc.
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(250) NOT NULL,
+    locked BOOLEAN NOT NULL,
+    disabled BOOLEAN NOT NULL,
     patient_id INT UNIQUE,
     FOREIGN KEY (patient_id) REFERENCES patient(id)
     );

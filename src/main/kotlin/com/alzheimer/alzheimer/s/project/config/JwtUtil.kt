@@ -23,7 +23,7 @@ class JwtUtil {
             .withSubject(username)
             .withIssuer("app-admin")
             .withIssuedAt(Date())
-            .withExpiresAt(Date(System.currentTimeMillis() + TimeUnit.HOURS.toMillis(1)))
+            .withExpiresAt(Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(15)))
             .sign(ALGORITHM)
     }
     fun isValid(jwt: String?): Boolean {
