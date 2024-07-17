@@ -1,11 +1,13 @@
 package com.alzheimer.alzheimer.s.project.config
+
 import com.alzheimer.alzheimer.s.project.repository.UserRepository
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import java.util.Date
+import java.util.*
 import java.util.concurrent.TimeUnit
 @Component
 class JwtUtil {

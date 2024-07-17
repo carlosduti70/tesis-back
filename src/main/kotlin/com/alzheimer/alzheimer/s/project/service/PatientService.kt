@@ -1,7 +1,9 @@
 package com.alzheimer.alzheimer.s.project.service
 
 import com.alzheimer.alzheimer.s.project.model.Patient
+import com.alzheimer.alzheimer.s.project.model.UserPatientView
 import com.alzheimer.alzheimer.s.project.repository.PatientRepository
+import com.alzheimer.alzheimer.s.project.repository.UserPatientViewRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Example
 import org.springframework.data.domain.ExampleMatcher
@@ -16,11 +18,15 @@ class PatientService {
     @Autowired
     lateinit var patientRepository: PatientRepository
 
-    fun list (pageable: Pageable, patient: Patient): Page<Patient> {
-        val matcher = ExampleMatcher.matching()
-            .withIgnoreNullValues()
-            .withMatcher(("fullname"), ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
-        return patientRepository.findAll(Example.of(patient, matcher), pageable)
+    @Autowired
+    lateinit var userPatientViewRepository: UserPatientViewRepository
+
+    fun list (): List<Patient> {
+        return patientRepository.findAll()
+    }
+
+    fun listUserPatient (username:String): UserPatientView{
+        return userPatientViewRepository.findByUsername(username)
     }
 
     fun save(patient: Patient): Patient{

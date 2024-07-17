@@ -27,10 +27,9 @@ class Reminders {
     @Column(name = "end_time")
     var endTime: LocalTime? = null
     var status: String? = null
-    var repeat: Boolean? = null
-
-    @Column(name = "user_id")
-    var userId: Long? = null
+    var repeat: Boolean? = false
+    @Column(name = "is_send")
+    var isSend: Boolean? = false
     @Column(name = "patient_id")
     var patientId: Long? = null
     @Column(name = "card_id")

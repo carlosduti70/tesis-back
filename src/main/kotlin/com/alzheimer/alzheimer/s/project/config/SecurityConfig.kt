@@ -1,5 +1,6 @@
 package com.alzheimer.alzheimer.s.project.config
 
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -30,8 +31,8 @@ class SecurityConfig {
                 authRequest
                     .requestMatchers("/auth/**").permitAll()
                     .requestMatchers("/patient/**").permitAll()
-                    .requestMatchers(HttpMethod.POST,"/alarm/**").hasAnyRole("ADMIN")
-                    .anyRequest().hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST,"/alarm/**").permitAll()
+//                    .anyRequest().hasAnyRole("ADMIN")
 
                     .anyRequest().permitAll()
             }

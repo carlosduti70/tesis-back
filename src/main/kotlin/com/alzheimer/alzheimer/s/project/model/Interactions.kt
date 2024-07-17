@@ -25,6 +25,9 @@ class Interactions {
 
     var hour: LocalTime?= null
 
+    @Column(name = "patient_id")
+    var patientId: Long? = null
+
     @Column(name = "card_id")
     var cardId: Long? = null
 }

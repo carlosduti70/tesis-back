@@ -2,6 +2,7 @@ package com.alzheimer.alzheimer.s.project.controller
 
 
 import com.alzheimer.alzheimer.s.project.model.Patient
+import com.alzheimer.alzheimer.s.project.model.Reminders
 import com.alzheimer.alzheimer.s.project.service.PatientService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.domain.Pageable
@@ -17,8 +18,13 @@ class PatientController {
     lateinit var patientService: PatientService
 
     @GetMapping
-    fun list (patient: Patient, pageable: Pageable): ResponseEntity<*> {
-        val response= patientService.list(pageable ,patient)
+    fun list (): List<Patient> {
+        return patientService.list()
+    }
+
+    @GetMapping("/get-home/{username}")
+    fun listUserPatient (@PathVariable("username") username: String): ResponseEntity<*> {
+        val response= patientService.listUserPatient(username)
         return ResponseEntity(response, HttpStatus.OK)
     }
 

@@ -1,12 +1,13 @@
 package com.alzheimer.alzheimer.s.project.controller
 
 import com.alzheimer.alzheimer.s.project.model.Alarm
-import com.alzheimer.alzheimer.s.project.model.Card
+import com.alzheimer.alzheimer.s.project.model.UserEntity
+import com.alzheimer.alzheimer.s.project.repository.UserRepository
 import com.alzheimer.alzheimer.s.project.service.AlarmService
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.core.Authentication
 import org.springframework.web.bind.annotation.*
 
 @RestController
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*
 class AlarmController {
     @Autowired
     lateinit var alarmService: AlarmService
+    @Autowired
+    lateinit var userRepository: UserRepository
 
     @GetMapping
     fun list (): List<Alarm> {
@@ -35,7 +38,8 @@ class AlarmController {
 
     @PostMapping
     fun save(@RequestBody alarm: Alarm): ResponseEntity<Alarm> {
-        return ResponseEntity.ok(alarmService.save(alarm))
+        val savedAlarm = alarmService.save(alarm)
+        return ResponseEntity.ok(savedAlarm)
     }
 
     @PutMapping

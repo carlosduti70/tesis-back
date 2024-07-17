@@ -1,8 +1,8 @@
 package com.alzheimer.alzheimer.s.project.service
 
 import com.alzheimer.alzheimer.s.project.model.Card
-import com.alzheimer.alzheimer.s.project.model.CardName
-import com.alzheimer.alzheimer.s.project.repository.CardNameRepository
+//import com.alzheimer.alzheimer.s.project.model.CardName
+//import com.alzheimer.alzheimer.s.project.repository.CardNameRepository
 import com.alzheimer.alzheimer.s.project.repository.CardRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -16,8 +16,8 @@ class CardService {
     @Autowired
     lateinit var cardRepository: CardRepository
 
-    @Autowired
-    lateinit var cardNameRepository: CardNameRepository
+//    @Autowired
+//    lateinit var cardNameRepository: CardNameRepository
 
     fun list (): List<Card> {
         return cardRepository.findAll()

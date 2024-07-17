@@ -1,5 +1,6 @@
 package com.alzheimer.alzheimer.s.project.service
 
+
 import com.alzheimer.alzheimer.s.project.model.Interactions
 import com.alzheimer.alzheimer.s.project.repository.InteractionsRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,11 +17,15 @@ class InteractionsService {
     @Autowired
     lateinit var interactionsRepository: InteractionsRepository
 
-    fun list (pageable: Pageable, interactions: Interactions): Page<Interactions> {
-        val matcher = ExampleMatcher.matching()
-            .withIgnoreNullValues()
-            .withMatcher(("fullname"), ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
-        return interactionsRepository.findAll(Example.of(interactions, matcher), pageable)
+//    fun list (pageable: Pageable, interactions: Interactions): Page<Interactions> {
+//        val matcher = ExampleMatcher.matching()
+//            .withIgnoreNullValues()
+//            .withMatcher(("fullname"), ExampleMatcher.GenericPropertyMatchers.contains().ignoreCase())
+//        return interactionsRepository.findAll(Example.of(interactions, matcher), pageable)
+//    }
+
+    fun list (): List<Interactions> {
+        return interactionsRepository.findAll()
     }
 
     fun save(interactions: Interactions): Interactions{
@@ -32,17 +37,17 @@ class InteractionsService {
         }
     }
 
-    fun update(interactions: Interactions): Interactions{
-        try {
-            interactionsRepository.findById(interactions.id)
-                ?: throw Exception("ID no existe")
-
-            return interactionsRepository.save(interactions)
-        }
-        catch (ex:Exception){
-            throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
-        }
-    }
+//    fun update(interactions: Interactions): Interactions{
+//        try {
+//            interactionsRepository.findById(interactions.id)
+//                ?: throw Exception("ID no existe")
+//
+//            return interactionsRepository.save(interactions)
+//        }
+//        catch (ex:Exception){
+//            throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
+//        }
+//    }
 
 //    fun updateName(interactions:Interactions): Interactions{
 //        try{

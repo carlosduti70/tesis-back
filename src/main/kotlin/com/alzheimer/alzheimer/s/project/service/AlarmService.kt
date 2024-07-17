@@ -1,6 +1,7 @@
 package com.alzheimer.alzheimer.s.project.service
 
 import com.alzheimer.alzheimer.s.project.model.Alarm
+import com.alzheimer.alzheimer.s.project.model.UserEntity
 import com.alzheimer.alzheimer.s.project.repository.AlarmRepository
 import com.alzheimer.alzheimer.s.project.repository.PatientRepository
 //import com.alzheimer.alzheimer.s.project.repository.CaragiversRepository
@@ -38,14 +39,14 @@ class AlarmService {
         return alarmRepository.findById(id)
     }
 
-    fun save(alarm: Alarm): Alarm {
+    fun save(alarm: Alarm): Alarm{
         try {
             patientRepository.findById(alarm.patientId)
                 ?: throw Exception("Id del paciente no encontrado")
             return alarmRepository.save(alarm)
         }
-        catch (ex: Exception) {
-            throw ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.message)
+        catch (ex:Exception){
+            throw ResponseStatusException(HttpStatus.NOT_FOUND, ex.message)
         }
     }
 

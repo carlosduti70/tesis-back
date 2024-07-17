@@ -18,18 +18,12 @@ import org.springframework.web.bind.annotation.*
 
 
 @RestController
-@CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT, RequestMethod.DELETE])
 @RequestMapping("/auth")
 class AuthController {
     @Autowired
     private val authenticationManager: AuthenticationManager? = null
     @Autowired
     private val jwtUtil: JwtUtil? = null
-
-    @Autowired
-    lateinit var service: UserSecurityService
-    @Autowired
-    lateinit var userSecurityService: UserSecurityService
 
     @PostMapping("/login")
     fun login(@RequestBody loginDto: LoginDTO): ResponseEntity<*>? {
@@ -39,18 +33,11 @@ class AuthController {
         return ResponseEntity(response, HttpStatus.OK)
     }
 
-//    @PostMapping("/register")
-//    fun register(
-//        @RequestBody request: RegisterRequest
-//    ): ResponseEntity<TokenDTO?>? {
-//        return ResponseEntity.ok(service.register(request))
+//    @PostMapping("/logout")
+//    fun logout() {
+//        // Invalidar la sesión actual y eliminar el token JWT
+//        SecurityContextHolder.clearContext()
+//        // Puedes agregar otras lógicas de limpieza de sesión si es necesario
 //    }
-
-    @PostMapping("/logout")
-    fun logout() {
-        // Invalidar la sesión actual y eliminar el token JWT
-        SecurityContextHolder.clearContext()
-        // Puedes agregar otras lógicas de limpieza de sesión si es necesario
-    }
 
 }

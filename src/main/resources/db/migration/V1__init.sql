@@ -2,14 +2,14 @@ CREATE TABLE IF NOT EXISTS card (
     id SERIAL PRIMARY KEY,
     date_time TIMESTAMP,
     hour TIME,
-    card_uid VARCHAR(15) UNIQUE
+    card_uid VARCHAR(15)
     );
 
-CREATE TABLE IF NOT EXISTS cardname (
-    id SERIAL PRIMARY KEY,
-    card_uid VARCHAR(15) UNIQUE,
-    FOREIGN KEY (card_uid) REFERENCES card(card_uid)
-    );
+-- CREATE TABLE IF NOT EXISTS cardname (
+--     id SERIAL PRIMARY KEY,
+--     card_uid VARCHAR(15) UNIQUE,
+--     FOREIGN KEY (card_uid) REFERENCES card(card_uid)
+--     );
 
 CREATE TABLE IF NOT EXISTS patient (
     id SERIAL PRIMARY KEY,
@@ -18,9 +18,7 @@ CREATE TABLE IF NOT EXISTS patient (
     age TIMESTAMP,
     date_diagnosis DATE,
     address VARCHAR(55),
-    stage VARCHAR(55),
-    cardname_id INT UNIQUE,
-    FOREIGN KEY (cardname_id) REFERENCES cardname(id)
+    stage VARCHAR(55)
     );
 
 CREATE TABLE IF NOT EXISTS users (
@@ -54,10 +52,9 @@ CREATE TABLE IF NOT EXISTS reminders (
     end_time TIME,
     status VARCHAR(75),
     repeat BOOLEAN,
-    user_id INT,
+    is_send BOOLEAN,
     patient_id INT,
     card_id INT,
-    FOREIGN KEY (user_id) REFERENCES users(id),
     FOREIGN KEY (patient_id) REFERENCES patient(id),
     FOREIGN KEY (card_id) REFERENCES card(id)
     );
@@ -68,6 +65,8 @@ CREATE TABLE IF NOT EXISTS interactions (
     date_time TIMESTAMP,
     hour TIME,
     card_id INT,
+    patient_id INT,
+    FOREIGN KEY (patient_id) REFERENCES patient(id),
     FOREIGN KEY (card_id) REFERENCES card(id)
     );
 

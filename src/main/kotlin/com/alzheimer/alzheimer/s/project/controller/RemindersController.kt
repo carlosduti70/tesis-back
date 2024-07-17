@@ -26,7 +26,7 @@ class RemindersController {
     @Autowired
     lateinit var remindersService: RemindersService
 
-    @GetMapping
+    @GetMapping()
     fun list (): List<Reminders> {
         return remindersService.list()
     }

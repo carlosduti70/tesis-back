@@ -12,11 +12,10 @@ class UserEntity {
     @Column(updatable = false)
     var id: Long? = null
 
-
-    var password: String? = null
-
     @Column(length = 50)
     var username: String? = null
+
+    var password: String? = null
 
     @Column(nullable = false)
     var locked: Boolean? = null
@@ -31,5 +30,4 @@ class UserEntity {
 
     @Column(name = "patient_id")
     var patientId: Long? = null
-
 }

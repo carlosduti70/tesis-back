@@ -1,6 +1,7 @@
 package com.alzheimer.alzheimer.s.project.controller
 
 
+//import com.alzheimer.alzheimer.s.project.model.CardName
 import com.alzheimer.alzheimer.s.project.model.Interactions
 import com.alzheimer.alzheimer.s.project.service.InteractionsService
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,10 +17,15 @@ class InteractionsController {
     @Autowired
     lateinit var interactionsService: InteractionsService
 
+//    @GetMapping
+//    fun list (interactions: Interactions, pageable: Pageable): ResponseEntity<*> {
+//        val response= interactionsService.list(pageable ,interactions)
+//        return ResponseEntity(response, HttpStatus.OK)
+//    }
+
     @GetMapping
-    fun list (interactions: Interactions, pageable: Pageable): ResponseEntity<*> {
-        val response= interactionsService.list(pageable ,interactions)
-        return ResponseEntity(response, HttpStatus.OK)
+    fun list (): List<Interactions> {
+        return interactionsService.list()
     }
 
     @PostMapping
@@ -27,10 +33,10 @@ class InteractionsController {
         return ResponseEntity(interactionsService.save(interactions), HttpStatus.OK)
     }
 
-    @PutMapping
-    fun update (@RequestBody interactions: Interactions):ResponseEntity<Interactions>{
-        return ResponseEntity(interactionsService.update(interactions), HttpStatus.OK)
-    }
+//    @PutMapping
+//    fun update (@RequestBody interactions: Interactions):ResponseEntity<Interactions>{
+//        return ResponseEntity(interactionsService.update(interactions), HttpStatus.OK)
+//    }
 
 //    @PatchMapping
 //    fun updateName (@RequestBody interactions: Interactions):ResponseEntity<Interactions>{

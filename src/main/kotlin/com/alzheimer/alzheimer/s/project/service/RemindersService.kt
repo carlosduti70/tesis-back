@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.server.ResponseStatusException
+import java.time.LocalDate
+import java.time.LocalTime
+import kotlinx.coroutines.*
 
 @Service
 class RemindersService {
@@ -22,9 +25,6 @@ class RemindersService {
     lateinit var patientRepository: PatientRepository
 
     @Autowired
-    lateinit var userRepository: UserRepository
-
-    @Autowired
     lateinit var cardRepository: CardRepository
 
     fun list (): List<Reminders> {
@@ -35,32 +35,43 @@ class RemindersService {
 
     fun listCard(card: Card): List<Reminders> {
         try {
-            val patient = patientRepository.findAll()
+            card.dateTime = LocalDate.now()
+            card.hour = LocalTime.now().withSecond(0).withNano(0)
+            val cardsave = cardRepository.save(card)
+
             val reminders = remindersRepository.findAll()
 
             val response = reminders.filter {
-                it.date == card.dateTime
-                        && it.startTime!! <= card.hour!!.withSecond(0).withNano(0)
-                        && it.endTime!! >= card.hour!!.withSecond(0).withNano(0)
-            }
+                it.date == cardsave.dateTime
+                        && it.startTime!! <= cardsave.hour!!.withSecond(0).withNano(0)
+                        && it.endTime!! >= cardsave.hour!!.withSecond(0).withNano(0) &&
+                        it.isSend == false
+            }.sortedBy { it.id }
 
-            response.forEach { reminder ->
+            if (response.isNotEmpty()) {
+                val firstReminder = response.first()
+
+                // Marca el primer recordatorio como enviado
+                firstReminder.isSend = true
+                remindersRepository.save(firstReminder)
+
+                // Crea y guarda la interacción
                 val interaction = Interactions().apply {
-                    title = reminder.title        // Título del recordatorio
-                    dateTime = card.dateTime  // Fecha de la card
-                    hour = card.hour!!.withSecond(0).withNano(0)    // Hora de la card
-                    cardId = card.id
+                    patientId = firstReminder.patientId
+                    title = firstReminder.title
+                    dateTime = card.dateTime
+                    hour = card.hour!!.withSecond(0).withNano(0)
                 }
                 interactionsRepository.save(interaction)
+
+                return listOf(firstReminder)
+            } else {
+                return emptyList()
             }
-
-            return response
+    }
+        catch (ex:Exception){
+            throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
-        catch (ex : Exception){
-            throw ResponseStatusException(
-                HttpStatus.NOT_FOUND, ex.message, ex)
-        }
-
     }
 
 
@@ -69,8 +80,6 @@ class RemindersService {
         try{
             patientRepository.findById(reminders.patientId)
                 ?: throw Exception("Id del paciente no encontrado")
-            cardRepository.findById(reminders.cardId)
-                ?: throw Exception("Id del card no encontrada")
             return remindersRepository.save(reminders)
         }
         catch (ex:Exception){

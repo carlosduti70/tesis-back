@@ -21,5 +21,5 @@ class Card {
     var dateTime: LocalDate? = null
     var hour: LocalTime?= null
     @Column(name = "card_uid")
-    var cardUid: String = ""
+    var cardUid: String? = null
 }
