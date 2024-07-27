@@ -6,6 +6,8 @@ import com.alzheimer.alzheimer.s.project.dto.RegisterRequest
 import com.alzheimer.alzheimer.s.project.dto.TokenDTO
 import com.alzheimer.alzheimer.s.project.model.Patient
 import com.alzheimer.alzheimer.s.project.model.UserEntity
+import com.alzheimer.alzheimer.s.project.repository.UserRepository
+import com.alzheimer.alzheimer.s.project.service.PatientService
 import com.alzheimer.alzheimer.s.project.service.UserSecurityService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -25,11 +27,22 @@ class AuthController {
     @Autowired
     private val jwtUtil: JwtUtil? = null
 
+    @Autowired
+    lateinit var patientService: PatientService
+
+    @Autowired
+    lateinit var userSecurityService: UserSecurityService
     @PostMapping("/login")
     fun login(@RequestBody loginDto: LoginDTO): ResponseEntity<*>? {
         val login = UsernamePasswordAuthenticationToken(loginDto.username, loginDto.password)
         val authentication: Authentication = authenticationManager!!.authenticate(login)
         val response = TokenDTO().apply { jwt= jwtUtil!!.create(loginDto.username)}
+        return ResponseEntity(response, HttpStatus.OK)
+    }
+
+    @PostMapping("/register")
+    fun register(@RequestBody registerRequest: RegisterRequest): ResponseEntity<*>? {
+        val response = userSecurityService.register(registerRequest)
         return ResponseEntity(response, HttpStatus.OK)
     }
 

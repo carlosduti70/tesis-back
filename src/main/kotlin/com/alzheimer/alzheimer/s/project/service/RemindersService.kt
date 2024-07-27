@@ -11,6 +11,9 @@ import org.springframework.web.server.ResponseStatusException
 import java.time.LocalDate
 import java.time.LocalTime
 import kotlinx.coroutines.*
+import java.util.concurrent.Executors
+import java.util.concurrent.ScheduledExecutorService
+import java.util.concurrent.TimeUnit
 
 @Service
 class RemindersService {
@@ -31,9 +34,7 @@ class RemindersService {
         return remindersRepository.findAll()
     }
 
-
-
-    fun listCard(card: Card): List<Reminders> {
+    fun listCard(card: Card): Reminders? {
         try {
             card.dateTime = LocalDate.now()
             card.hour = LocalTime.now().withSecond(0).withNano(0)
@@ -64,16 +65,15 @@ class RemindersService {
                 }
                 interactionsRepository.save(interaction)
 
-                return listOf(firstReminder)
+                return firstReminder
             } else {
-                return emptyList()
+                return null
             }
     }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-
 
 
     fun save(reminders: Reminders): Reminders{
@@ -128,6 +128,4 @@ class RemindersService {
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
         }
     }
-
-
 }

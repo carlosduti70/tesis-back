@@ -31,7 +31,8 @@ class PatientService {
 
     fun save(patient: Patient): Patient{
         try{
-            return patientRepository.save(patient)
+            val patientSaved = patientRepository.save(patient)
+            return patientSaved
         }
         catch (ex:Exception){
             throw ResponseStatusException(HttpStatus.NOT_FOUND,ex.message)
